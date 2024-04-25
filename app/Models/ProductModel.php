@@ -1,15 +1,29 @@
 <?php
 
 namespace App\Models;
+
+use App\Traits\Loggable;
+
+use Exception;
 // tự hiểu auto_load sẽ add vào
-class ProductModel extends BaseModel
+class ProductModel extends BaseModel implements IProductModel
 {
+    use Loggable;
+
     public function getAllProducts()
     {
-        $this->db->query("SELECT * FROM articles");
-        return $this->db->resultSet();
-    }
+        try {
+            $this->db->query("SELECT * FROM articles");
+            $this->log("Getting all products from " . __FILE__);
+            //-> output là  file này "C:\xampp\htdocs\PHP_MVC\app\Models\ProductModel.php"
 
+            return $this->db->resultSet();
+        } catch (Exception $e) {
+            // Xử lý lỗi ở đây
+            $this->log("Caught exception: " . $e->getMessage());
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+    }
     public function getProductById($id)
     {
         $this->db->query("SELECT * FROM sanpham WHERE id = :id");
@@ -20,11 +34,14 @@ class ProductModel extends BaseModel
 
     public function createProduct($productData)
     {
-        $this->db->query("INSERT INTO sanpham (name, description, price) VALUES (:name, :description, :price)");
+        $this->db->query("INSERT INTO articles (title, body, created_at, updated_at) VALUES(:title, :body, :created_at, :updated_at)");
         // Bind values
-        $this->db->bind(':name', $productData['name']);
-        $this->db->bind(':description', $productData['description']);
-        $this->db->bind(':price', $productData['price']);
+        $this->db->bind(':title', $productData['title']);
+        $this->db->bind(':body', $productData['body']);
+        // Get current date and time
+        $now = new \DateTime();
+        $this->db->bind(':created_at', $now->format('Y-m-d H:i:s'));
+        $this->db->bind(':updated_at', $now->format('Y-m-d H:i:s'));
         // Execute
         if ($this->db->execute()) {
             return true;
@@ -32,7 +49,6 @@ class ProductModel extends BaseModel
             return false;
         }
     }
-
     public function deleteProduct($id)
     {
         $this->db->query("DELETE FROM sanpham WHERE id = :id");

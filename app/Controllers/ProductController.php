@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
+use App\Validators\FormValidator;
 use Symfony\Component\VarDumper\VarDumper;
+use function App\Controllers\view;
+use Exception;
 
 class ProductController extends BaseController
 {
@@ -23,6 +26,45 @@ class ProductController extends BaseController
         $data = compact('products');
         require_once 'app/Views/product_list.php';
     }
+
+    public function createProduct()
+    {
+        require_once 'app/Views/create_product.php';
+    }
+
+
+    public function handle_createProduct()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $validator = new FormValidator($_POST);
+            try {
+                $validator->validate();
+                if ($validator->validate() == false) {
+                    echo "cho loi ne ";
+                    exit();
+                } else {
+                    echo "hello";
+
+                    echo $_POST['title'];
+
+                    exit();
+                }
+                $productData = [
+                    'title' => $_POST['title'],
+                    'body' => $_POST['body'],
+                ];
+
+
+                $this->productModel->createProduct($productData);
+                header('Location: /product/list');
+                exit();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
+
 
     public function productdetail()
     {

@@ -17,6 +17,13 @@ Route::add('/index', 'HomeController@index');
 //echo "<pre>" . print_r(Route::showroutes()) . "</pre>";
 
 Route::add('/product/list', 'ProductController@productList');
+
+Route::add('/product/create', 'ProductController@createProduct');
+
+Route::add('/product/handle_create', 'ProductController@handle_createProduct');
+
+
+
 Route::add('/product/detail/(\d+)', 'ProductController@productdetail');
 //$router->add('/product/list', ['controller' => 'ProductController', 'action' => 'productList']);
 //echo "<pre>" . print_r(Route::showroutes()) . "</pre>";

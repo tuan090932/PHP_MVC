@@ -10,7 +10,7 @@ class Database
     private $host = 'localhost';
     private $user = 'root';
     private $password = '';
-    private $dbname = 'bookstore';
+    private $dbname = 'article_store';
     private $dbh;
     private $stmt;
     public function __construct()

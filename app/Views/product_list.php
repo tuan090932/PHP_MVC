@@ -21,17 +21,16 @@
         <div class="container">
             <div class="left-box">
                 <h2>Danh Mục</h2>
-                <!-- Danh sách danh mục -->
                 <ul>
-                    <?php
-                    foreach ($products as $product) {
-                        echo "<p>{$product['body']}</p>";
-                    }
-                    ?>
 
+                    <li>
 
-
-
+                        <?php
+                        foreach ($products as $product) {
+                            echo "<p>{$product['body']}</p>";
+                        }
+                        ?>
+                    </li>
                 </ul>
             </div>
 
