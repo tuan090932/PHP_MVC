@@ -24,6 +24,17 @@ Route::add('/product/handle_create', 'ProductController@handle_createProduct');
 
 
 
+
+// i want add edit -> give me route edit
+Route::add('/product/view/(\d+)', 'ProductController@handle_viewProduct');
+Route::add('/product/delete/(\d+)', 'ProductController@handle_deleteProduct');
+Route::add('/product/form_editProduct/(\d+)', 'ProductController@form_editProduct');
+
+Route::add('/product/edit', 'ProductController@handle_edit');
+
+
+
+
 Route::add('/product/detail/(\d+)', 'ProductController@productdetail');
 //$router->add('/product/list', ['controller' => 'ProductController', 'action' => 'productList']);
 //echo "<pre>" . print_r(Route::showroutes()) . "</pre>";

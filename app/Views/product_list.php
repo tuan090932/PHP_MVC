@@ -6,6 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sản Phẩm</title>
     <link rel="stylesheet" href="<?= BASE_PATH ?>/public/css/style.css">
+
+
+    <style>
+        /* Add your CSS here */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -19,30 +45,41 @@
     ?>
     <main>
         <div class="container">
-            <div class="left-box">
-                <h2>Danh Mục</h2>
-                <ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Body</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($products as $product) {
+                        echo "<tr>";
+                        echo "<td>{$product['title']}</td>";
+                        echo "<td>{$product['body']}</td>";
+                        echo "<td>";
+                        echo "<a href='delete/{$product['id']}'>Delete</a> | ";
+                        echo "<a href='view/{$product['id']}'>View</a> |";
+                        echo "<a href= 'form_editProduct/{$product['id']}'>edit</a> |";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
-                    <li>
+        <div class="right-box">
+            <div class="product-box">
 
-                        <?php
-                        foreach ($products as $product) {
-                            echo "<p>{$product['body']}</p>";
-                        }
-                        ?>
-                    </li>
-                </ul>
             </div>
 
-            <div class="right-box">
-                <div class="product-box">
+            <div class="pagination">
 
-                </div>
-
-                <div class="pagination">
-
-                </div>
             </div>
+        </div>
         </div>
     </main>
     <footer>&copy; 2023 BHZ Co.</footer>

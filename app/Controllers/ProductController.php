@@ -64,19 +64,108 @@ class ProductController extends BaseController
         }
     }
 
-
-
-    public function productdetail()
+    public function form_editProduct()
     {
-        // VarDumper::dump("helo");
-        $url = isset($_GET['url']) ? "/" . rtrim($_GET['url'], '/') : '/index';
-        $url_array = explode("/", $url);
-        if (count($url_array) > 0) {
-            $productId = $url_array[count($url_array) - 1];
-        } else {
-            $productId = "";
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = "https://";
+        else
+            $url = "http://";
+        $url .= $_SERVER['HTTP_HOST'];
+        $url .= $_SERVER['REQUEST_URI'];
+        $urlParts = parse_url($url);
+        $url = $urlParts;
+
+        // Split the path by '/'
+        $pathParts = explode('/', $url['path']);
+
+        // Get the last part of the path, which should be the final value
+        $finalValue = end($pathParts);
+
+        echo $finalValue;
+
+        compact($finalValue);
+
+        require_once 'app/Views/editProduct.php';
+    }
+
+
+    public function handle_deleteProduct()
+    {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = "https://";
+        else
+            $url = "http://";
+        $url .= $_SERVER['HTTP_HOST'];
+        $url .= $_SERVER['REQUEST_URI'];
+        $urlParts = parse_url($url);
+        $url = $urlParts;
+
+        // Split the path by '/'
+        $pathParts = explode('/', $url['path']);
+
+        // Get the last part of the path, which should be the final value
+        $finalValue = end($pathParts);
+
+        echo $finalValue;
+
+        $product = $this->productModel->deleteProduct($finalValue);
+    }
+
+
+    public function handle_edit()
+    {
+
+        if (isset($_POST['id'])) {
+            $title = $_POST['title'];
+            $body = $_POST['body'];
+            $product = [
+                'title' => $title,
+                'body' => $body,
+            ];
+
+            $this->productModel->editProduct($_POST['id'], $product);
         }
-        $product = $this->productModel->getProductById($productId);
-        require_once 'app/Views/product_detail.php';
+    }
+
+    public function handle_viewProduct()
+    {
+
+
+
+        // VarDumper::dump("helo");
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = "https://";
+        else
+            $url = "http://";
+        // Append the host(domain name, ip) to the URL.   
+        $url .= $_SERVER['HTTP_HOST'];
+        // Append the requested resource location to the URL   
+        $url .= $_SERVER['REQUEST_URI'];
+        // Phân tích URL
+        $urlParts = parse_url($url);
+        //  echo $urlParts;
+        // echo $urlParts['path'];
+
+        $url = $urlParts;
+
+        // Split the path by '/'
+        $pathParts = explode('/', $url['path']);
+
+        // Get the last part of the path, which should be the final value
+        $finalValue = end($pathParts);
+
+        echo $finalValue;
+
+
+
+
+
+
+
+
+        $product = $this->productModel->getProductById($finalValue);
+        echo "<script>alert('Title: " . $product['title'] . "\\nBody: " . $product['body'] . "');</script>";
+
+        //require_once 'app/Views/product_detail.php';
     }
 }
