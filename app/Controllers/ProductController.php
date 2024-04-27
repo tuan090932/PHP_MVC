@@ -40,14 +40,14 @@ class ProductController extends BaseController
             try {
                 $validator->validate();
                 if ($validator->validate() == false) {
-                    echo "cho loi ne ";
+                    echo "co loi ne ";
                     exit();
                 } else {
                     echo "hello";
 
                     echo $_POST['title'];
 
-                    exit();
+                    // exit();
                 }
                 $productData = [
                     'title' => $_POST['title'],
@@ -127,11 +127,28 @@ class ProductController extends BaseController
         }
     }
 
+
+
+
+    public function handleLogin()
+    {
+        // ... authentication logic ...
+        session_start();
+
+        // Set cookies for username and address
+        setcookie("username", "tuan ne", time() + (86400 * 30), "/"); // 86400 = 1 day
+        setcookie("address", "ktx khu a", time() + (86400 * 30), "/");
+        echo "<script>alert('setcookie thanh cong ');</script>";
+
+        //lay gia tri tu cookie -> show ra
+        echo "<script>alert('Title: " . $_COOKIE['username'] . "\\nBody: " . $_COOKIE['address'] . "');</script>";
+
+
+        // ... rest of the method ...
+    }
+
     public function handle_viewProduct()
     {
-
-
-
         // VarDumper::dump("helo");
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
             $url = "https://";

@@ -23,6 +23,7 @@ Route::add('/product/create', 'ProductController@createProduct');
 Route::add('/product/handle_create', 'ProductController@handle_createProduct');
 
 
+Route::add('/handleLogin', 'ProductController@handleLogin');
 
 
 // i want add edit -> give me route edit
@@ -35,7 +36,7 @@ Route::add('/product/edit', 'ProductController@handle_edit');
 
 
 
-Route::add('/product/detail/(\d+)', 'ProductController@productdetail');
+//Route::add('/product/detail/(\d+)', 'ProductController@productdetail');
 //$router->add('/product/list', ['controller' => 'ProductController', 'action' => 'productList']);
 //echo "<pre>" . print_r(Route::showroutes()) . "</pre>";
 //echo $_GET['url'];
